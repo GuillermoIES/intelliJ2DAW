@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        function habilita() {
+            var elementos = document.getElementById('form').elements;
+            for (i = 0; i < elementos.length; i += 1) {
+                elementos[i].disabled = false;
+            }
+        }
+        function deshabilita() {
+            var elementos = document.getElementById('form').elements;
+            for (i = 0; i < elementos.length; i += 1) {
+                elementos[i].disabled = true;
+            }
+        }
+        function cambiarColor(color) {
+            var elementos = document.getElementById('form').elements;
+            for (i = 0; i < elementos.length; i += 1) {
+                elementos[i].style.color = color;
+            }
+        }
+
+    </script>
+</head>
+<body>
+<form id="form">
+
+    <label for="nombre">Nombre: </label>
+    <input type="text" id="nombre" name="nombre"/>
+    <br/>
+    <label for="ap">Apellidos: </label>
+    <input type="text" id="ap" name="ap"/>
+    <br/>
+    <label for="edad">Edad: </label>
+    <input type="text" id="edad" name="edad"/>
+    <br/>
+
+</form>
+<input type="button" value="Habilita" onclick="habilita();"/>
+<input type="button" value="Deshabilita" onclick="deshabilita();"/>
+<input type="button" value="Texto Rojo" onclick="cambiarColor('red');"/>
+<input type="button" value="Texto Azul" onclick="cambiarColor('blue');"/>
+</body>
+</html>

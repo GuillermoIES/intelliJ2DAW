@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boletin</title>
+
+</head>
+<body>
+<form name="form" id="form">
+    <label for="bolsi">¿Desea Suscribirse a Nuestro Boletín?</label>
+    <input type="radio" id="bolsi" name="bol" value="si"/>Sí
+    <input type="radio" id="bolno" name="bol" value="no"/>No
+    <div id="bole">
+        <input type="checkbox" id="arte" name="cosas[]" value="arte"/>Arte
+        <br/>
+    </div>
+</form>
+</body>
+<script>
+
+
+    document.getElementById('bolsi').onchange = comprobar;
+    document.getElementById('bolno').onchange = comprobar;
+    document.getElementById('bolsi').checked = true;
+    function comprobar(miEvento) {
+        var e = miEvento | window.event;
+        if (document.getElementById('bolsi').checked) {
+            var div = document.getElementById('bole');
+            var elementos = div.childNodes;
+            for (i = 0; i < elementos.length; i += 1) {
+
+               elementos[i].disabled = false;
+            }
+        } else {
+            var div = document.getElementById('bole');
+            var elementos = div.childNodes;
+            for (i = 0; i < div.childElementCount; i += 1) {
+                elementos[i].disabled = true;
+            }
+        }
+    }
+</script>
+</html>

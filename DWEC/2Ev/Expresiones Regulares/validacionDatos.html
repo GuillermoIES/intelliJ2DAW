@@ -1,0 +1,98 @@
+<!--
+Un formulario donde
+el tfno fijo debe tener 9 cifras y empezar por 9 u 8
+tfno internacional debe empezar por (+34) 9-8-7-6 9 cifras
+tfno movil 7 o 6 9 cifras
+f nacimiento dd/mm/aaaa
+cp 28ddd
+matricula dddd-lll sin vocales
+apellidos 40 caracteres con espacio en blanco y tildes
+nombre    20 ""
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expresiones regulares</title>
+    <script>
+
+        function verificarDatos(){
+            document.getElementById('status').innerHTML = '';
+            var sol = true;
+            var tfnF = form.tfnF.value;
+            var tfnI = form.tfnI.value;
+            var tfnM = form.tfnM.value;
+            var fNac = form.fNac.value;
+            var cp = form.cp.value;
+            var mat = form.mat.value.toLowerCase();
+            var ap = form.ap.value.toLowerCase();
+            var nom = form.nom.value.toLowerCase();
+
+            if(!/^[98]\d{8}$/.test(tfnF)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'telefono fijo incorrecto <br/>';
+            }
+            if(!/^\(\+34\)[9876]\d{8}$/.test(tfnI)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'telefono internacional incorrecto <br/>';
+            }
+            if(!/^[76]\d{8}$/.test(tfnM)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'telefono móvil incorrecto <br/>';
+            }
+            if(!/^\d{2}\/\d{2}\/\d{4}$/.test(fNac)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'fecha incorrecta <br/>';
+            }
+            if(!/^28\d{3}$/.test(cp)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'código postal incorrecto <br/>';
+            }
+            if(!/^\d{4}\-[bcdfghjklmnpqrstvwxyz]{3}$/.test(mat)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'matrícula incorrecta <br/>';
+            }
+            if(!/^([a-z]|[áéíóú]|\s|[ñ]){1,40}$/.test(ap)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'apellidos incorrectos <br/>';
+            }
+            if(!/^([a-z]|[áéíóú]|\s|[ñ]){1,20}$/.test(nom)){
+                sol = false;
+                document.getElementById('status').innerHTML += 'nombre incorrecto <br/>';
+            }
+            return sol;
+        }
+    </script>
+</head>
+<body>
+    <form name="form" id="form" method="post" action="#" onsubmit="return verificarDatos();">
+        <label for="tfnF">Teléfono fijo: </label>
+        <input type="text" name="tfnF" id="tfnF"/>
+        <br/>
+        <label for="tfnI">Teléfono internacional: </label>
+        <input type="text" name="tfnI" id="tfnI"/>
+        <br/>
+        <label for="tfnM">Teléfono móvil: </label>
+        <input type="text" name="tfnM" id="tfnM"/>
+        <br/>
+        <label for="fNac">Fecha de nacimiento: </label>
+        <input type="text" name="fNac" id="fNac"/>
+        <br/>
+        <label for="cp">Código postal: </label>
+        <input type="text" name="cp" id="cp"/>
+        <br/>
+        <label for="mat">Matrícula: </label>
+        <input type="text" name="mat" id="mat"/>
+        <br/>
+        <label for="ap">Apellidos: </label>
+        <input type="text" name="ap" id="ap"/>
+        <br/>
+        <label for="nom">Nombre: </label>
+        <input type="text" name="nom" id="nom"/>
+        <br/>
+        <input type="submit" value="Comprobar"/>
+        <p id="status"></p>
+    </form>
+</body>
+</html>

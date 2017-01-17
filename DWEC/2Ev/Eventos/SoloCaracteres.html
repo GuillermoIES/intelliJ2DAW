@@ -1,0 +1,35 @@
+<!--
+Un campo de texto donde solo deben introducirse caracteres numéricos (en caso de teclear cualquier otra tecla no debe
+mostrarse en la caja de texto.
+La tecla de supr y <- deben borrar el contenido de la caja de texto.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="author" content="Eduardo Reneo"/>
+    <title>Title</title>
+</head>
+
+<body>
+<label for="in">Cosa</label>
+<input type="text" id="in" />
+
+<script>
+    var ableCods = [8, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, ];
+    document.getElementById('in').onkeydown=evaluar;
+
+    function evaluar(evento){
+        var e = evento || window.event;
+        var cod = e.keyCode;
+        if(ableCods.indexOf(cod)!= -1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>
+
+</body>
+</html>

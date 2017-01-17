@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularios con eventos</title>
+    <script>
+        function comprobarDisabled() {
+            var user = document.form.user.value;
+            user.trim();
+            var pwd = document.form.pwd.value;
+            pwd.trim();
+            if (user != '') {
+                document.form.pwd.disabled = false;
+                if (pwd != '') {
+                    document.form.btn.disabled = false;
+                } else {
+                    document.form.btn.disabled = true;
+                }
+            } else {
+                document.form.pwd.disabled = true;
+                document.form.btn.disabled = true;
+            }
+
+        }
+
+        var validUser = 'admin';
+        var validPwd = 'admin';
+        var contadorFallos = 0;
+        function autenticar() {
+
+            var user = document.form.user.value;
+            var pwd = document.form.pwd.value;
+            if (user == validUser && pwd == validPwd) {
+                document.form.action = 'bienvenida.html';
+                return true;
+            } else {
+                contadorFallos += 1;
+                if (contadorFallos < 3) {
+                   document.getElementById('status').innerHTML = 'Usuario o Password incorrectos, le quedan ' + (3 - contadorFallos) + ' intentos';
+                    return false;
+                } else {
+                    document.form.action = 'error.html';
+                    return true;
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<form name="form" id="form" action="#"  onsubmit="return autenticar();">
+    <label for="user">Nombre: </label>
+    <input type="text" id="user" name="user" onkeyup="comprobarDisabled();"/>
+    <br/>
+    <label for="pwd">Contraseña: </label>
+    <input type="password" id="pwd" name="pwd" disabled="disabled" onkeyup="comprobarDisabled();"/>
+    <br/>
+    <input type="submit" value="Login" disabled="disabled" id="btn" name="btn">
+</form>
+<p id="status"></p>
+</body>
+</html>

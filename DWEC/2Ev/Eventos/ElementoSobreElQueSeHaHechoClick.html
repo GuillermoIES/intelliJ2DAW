@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Título</title>
+
+</head>
+<body>
+<input type="text" id="campo_texto"/>
+<label for="campo_texto" id="label">Campo: </label>
+<p id="parrafo">Esto es un párrafo</p>
+<br/> <br/>
+<p id="log">Consola: <br/></p>
+<br/> <br/>
+<p id="abajo">Algo abajo</p>
+</body>
+<script>
+document.onclick = dondeSeHaHechoClick;
+    function dondeSeHaHechoClick(miEvento){
+        var e = miEvento || event;
+        var x = e.clientX;
+        var y = e.clientY;
+        var elem = document.elementFromPoint(x, y);
+        if(elem.id != '') {
+            document.getElementById('log').innerHTML += '<br/>Tipo de elemento: ' + elem.nodeName;
+            document.getElementById('log').innerHTML += '<br/>El elemento clickeado tiene id: ' + elem.id;
+            document.getElementById('log').innerHTML += '<br/>X: ' + x + ' Y: ' + y;
+        }
+    }
+</script>
+</html>
