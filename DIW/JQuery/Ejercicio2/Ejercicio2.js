@@ -27,4 +27,5 @@ function borr(){
     var $child = $('#lista li:nth-child(' + el + ')');
     $child.remove();
     $('#borrIn').val('');
+    //
 }
