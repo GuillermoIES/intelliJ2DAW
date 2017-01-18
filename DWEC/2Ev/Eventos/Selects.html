@@ -1,0 +1,50 @@
+<!--
+cuando el usuario elija un producto se habilitará el select de cantidades. si estan ambos seleccionados el boton se habilita.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selects</title>
+    <script>
+        window.onload=function () {
+            document.getElementById('producto').onchange = productoListener;
+            document.getElementById('cantidad').onchange = cantidadListener;
+
+        }
+        function productoListener(){
+            var select = document.getElementById('producto');
+            if(select.selectedIndex != 0){
+                document.getElementById('cantidad').disabled = false;
+            } else {
+                document.getElementById('cantidad').disabled = true;
+            }
+        }
+        function cantidadListener(){
+            var select = document.getElementById('cantidad');
+            if(select.selectedIndex != 0){
+                document.getElementById('enviar').disabled = false;
+            } else {
+                document.getElementById('enviar').disabled = true;
+            }
+        }
+    </script>
+</head>
+<body>
+<form name="formu" id="form" method="get" action="" target="_blank">
+    <select name="prod" id="producto">
+        <option selected="selected" disabled="disabled">Seleccione un producto</option>
+        <option value="001">001-P1</option>
+        <option value="002">002-P2</option>
+        <option value="003">003-P3</option>
+    </select>
+    <select name="cant" id="cantidad" disabled="disabled">
+        <option selected="selected" disabled="disabled">Seleccione una cantidad</option>
+        <option value="5">5 U</option>
+        <option value="10">10 U</option>
+        <option value="15">15 U</option>
+    </select>
+    <input type="submit" disabled="disabled" value="Enviar" id="enviar"/>
+</form>
+</body>
+</html>
