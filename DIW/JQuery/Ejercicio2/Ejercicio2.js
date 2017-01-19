@@ -1,31 +1,21 @@
+var $div;
 $(document).ready(function(){
-    $('#but').on('click' , anadir);
-    $('#arr').on('click' , arr);
-    $('#ab').on('click' , ab);
-    $('#borr').on('click' , borr);
+   $('div.peque').on('click', cambiaColor);
+   $('div.peque').on('mousemove', tooltip);
+   $('div.peque').on('mouseleave', quitarTooltip);
+   $div = $('div.tooltip');
+
 });
-function anadir(){
-    var value = $('#in').val();
-    var $lista = $('#lista');
-    if(value != ''){
-        $lista.append('<li>' + value + '</li>');
-        $('#in').val('');
-    }
+function cambiaColor (){
+    $('body').css('background-color', $(this).attr('value') );
 }
-function arr(){
-    var $lista = $('#lista');
-    var $lastChild = $('#lista li:last-child');
-    $lista.prepend($lastChild);
+function tooltip(e){
+    $div.text($(this).attr('value'));
+    $div.css('left', e.pageX+10);
+    $div.css('top', e.pageY+10);
+    $div.css('background-color', $(this).attr('value'));
+    $div.css('display', 'block');
 }
-function ab(){
-    var $lista = $('#lista');
-    var $firstChild = $('#lista li:first-child');
-    $lista.append($firstChild);
-}
-function borr(){
-    var el = $('#borrIn').val();
-    var $child = $('#lista li:nth-child(' + el + ')');
-    $child.remove();
-    $('#borrIn').val('');
-    //
+function quitarTooltip(){
+    $div.css('display', 'none');
 }

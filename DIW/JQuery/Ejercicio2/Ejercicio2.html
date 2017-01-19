@@ -2,27 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aniadir a la lista</title>
+    <title>Cambiar color</title>
     <script src="../../../lib/jquery-3.1.1.js"></script>
     <script src="Ejercicio2.js"></script>
+    <style>
+        .peque {
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            float: left;
+            margin-right: 1%;
+        }
+        .tooltip {
+            position: absolute;
+            border: 2px solid black;
+            top: -100px;
+            left: -100px;
+            display: none;
+
+        }
+    </style>
 </head>
 <body>
-<label for="in">Añadir campo: </label>
-<input type="text" id="in"/>
-<br/> <br/>
-<input type="button" value="Añadir" id="but"/>
-<input type="button" value="^" id="arr"/>
-<input type="button" value="v" id="ab"/>
-<br/> <br/>
-<label for="borrIn">Elemento a borrar</label>
-<input type="text" id="borrIn"/>
-<input type="button" value="X" id="borr"/>
+<div class="peque" style="background-color: brown" value="brown"></div>
+<div class="peque" style="background-color: red" value="red"></div>
+<div class="peque" style="background-color: grey" value="grey"></div>
+<div class="peque" style="background-color: yellow" value="yellow"></div>
+<div class="tooltip">algo</div>
 <br/>
-<h1>Cosas añadidas</h1>
-<ul id="lista">
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-</ul>
 </body>
 </html>
