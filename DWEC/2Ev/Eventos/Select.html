@@ -6,6 +6,22 @@
     <link href="../../../lib//css/bootstrap.min.css" rel="stylesheet">
     <script src="../../../lib/js/jquery.min.js"></script>
     <script src="../../../lib/js/bootstrap.min.js"></script>
+    <script>
+        window.onload(function () {
+
+
+        });
+        function all(selOr) {
+
+        }
+        function selTo(selOr) {
+
+        }
+        function selCopy(selOr) {
+
+        }
+
+    </script>
 </head>
 <body>
 <div class="row">
@@ -19,27 +35,33 @@
         <input type="button" value="Añadir" onclick="aniadir();"/>
     </div>
 </div>
+<br/>
 <div class="row">
     <div class="col-md-5">
-        <select id="sel1" size="15"/>
+        <select id="sel1" size="15">
+
+        </select>
 
     </div>
     <div class="col-md-2">
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value=">>|" onclick="all('sel1');"/>
         <br/>
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value=">" onclick="selTo('sel1');"/>
         <br/>
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value="<" onclick="selTo('sel2');"/>
         <br/>
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value="|<<" onclick="all('sel2');"/>
         <br/>
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value="Copy >" onclick="selCopy('sel1');"/>
         <br/>
-        <input type="button" value=">>|" onclick="sel1To2();"/>
+        <input type="button" value="< Copy" onclick="selCopy('sel2');"/>
         <br/>
     </div>
     <div class="col-md-5">
-        <select id="sel2" size="15"/>
+        <select id="sel2" size="15">
+
+
+        </select>
 
     </div>
 
