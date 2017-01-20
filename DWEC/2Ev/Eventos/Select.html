@@ -7,65 +7,94 @@
     <script src="../../../lib/js/jquery.min.js"></script>
     <script src="../../../lib/js/bootstrap.min.js"></script>
     <script>
-        window.onload(function () {
-
-
-        });
-        function all(selOr) {
-
+        function aniadir() {
+            var texto = document.getElementById('texto').value;
+            var option = new Option(texto);
+            var valor = document.getElementById('valor').value;
+            option.value = valor;
+            document.getElementById('sel1').add(option);
         }
-        function selTo(selOr) {
+        function mover(selOr, selDes, todos, copiar){
+            var selectOrigen = document.getElementById(selOr);
+            var selectDestino = document.getElementById(selDes);
+            for (var i = 1; i < selectOrigen.length; i += 1) {
+                if(todos || selectOrigen[i].selected) {
+                    var text = selectOrigen[i].text;
+                    var value = selectOrigen[i].value;
+                    var option = new Option();
+                    option.text = text;
+                    option.value = value;
+                    selectDestino.add(option);
 
+                }
+            }
+            if(copiar==null || !copiar) {
+                borrar(selOr);
+            }
         }
-        function selCopy(selOr) {
-
+        function borrar(sel){
+            var select = document.getElementById(sel);
+            while (select.length > 1){
+                select.remove(1);
+            }
         }
-
     </script>
 </head>
 <body>
-<div class="row">
-    <div class="col-md-12">
-        <label for="texto">Texto: </label>
-        <input type="text" id="texto"/>
-        <br/>
-        <label for="valor">Valor: </label>
-        <input type="text" id="valor"/>
-        <br/>
-        <input type="button" value="Añadir" onclick="aniadir();"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+            <label for="texto">Texto: </label>
+            <input type="text" class="form-control" id="texto"/>
+            <br/>
+            <label for="valor">Valor: </label>
+            <input type="text" class="form-control" id="valor"/>
+            <br/>
+            <input type="button" class="btn btn-primary" value="Añadir" onclick="aniadir();"/>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-2">
+            <select id="sel1" size="15" multiple="multiple">
+                <option disabled="disabled">Lista 1</option>
+                <option value="1">op1</option>
+                <option value="2">op2</option>
+                <option value="3">op3</option>
+                <option value="4">op4</option>
+            </select>
+            <br/>
+            <input type="button" value="Borrar" onclick="borrar('sel1');"/>
+        </div>
+        <div class="col-md-2">
+            <input type="button" class="btn btn-default" value=">>|" onclick="mover('sel1', 'sel2', true, null);"/>
+            <br/>
+            <input type="button" class="btn btn-default" value=">" onclick="mover('sel1', 'sel2', false, false);"/>
+            <br/>
+            <input type="button" class="btn btn-default" value="<" onclick="mover('sel2', 'sel1', false, false);"/>
+            <br/>
+            <input type="button" class="btn btn-default" value="|<<" onclick="mover('sel2', 'sel1', true, null);"/>
+            <br/>
+            <input type="button" class="btn btn-default" value="Copy >" onclick="mover('sel1', 'sel2',false, true);"/>
+            <br/>
+            <input type="button" class="btn btn-default" value="< Copy" onclick="mover('sel2', 'sel1', false, true);"/>
+            <br/>
+        </div>
+        <div class="col-md-2">
+            <select id="sel2" size="15" multiple="multiple">
+                <option disabled="disabled">Lista 2</option>
+                <option value="1">op1</option>
+                <option value="2">op2</option>
+                <option value="3">op3</option>
+                <option value="4">op4</option>
+            </select>
+            <br/>
+            <input type="button" value="Borrar" onclick="borrar('sel2');"/>
+        </div>
+
     </div>
 </div>
-<br/>
-<div class="row">
-    <div class="col-md-5">
-        <select id="sel1" size="15">
-
-        </select>
-
-    </div>
-    <div class="col-md-2">
-        <input type="button" value=">>|" onclick="all('sel1');"/>
-        <br/>
-        <input type="button" value=">" onclick="selTo('sel1');"/>
-        <br/>
-        <input type="button" value="<" onclick="selTo('sel2');"/>
-        <br/>
-        <input type="button" value="|<<" onclick="all('sel2');"/>
-        <br/>
-        <input type="button" value="Copy >" onclick="selCopy('sel1');"/>
-        <br/>
-        <input type="button" value="< Copy" onclick="selCopy('sel2');"/>
-        <br/>
-    </div>
-    <div class="col-md-5">
-        <select id="sel2" size="15">
-
-
-        </select>
-
-    </div>
-
-</div>
-
 </body>
 </html>
