@@ -25,6 +25,7 @@ $(document).ready(function () {
     $c.on('mousemove', tooltip);
     $c.on('mouseleave', quitarTooltip);
     $('#col').on('click', colorPersonalizado);
+    $('#save').on('click', guardar);
 });
 function colorPersonalizado (){
     var colorPers = $('#color').val();
@@ -91,4 +92,9 @@ function cambiaColor() {
     color = $(this).attr('value');
     $('div.peque[value="' + color + '"]').css('border', '3px solid black');
     console.log(color);
+}
+function guardar(){
+    var img = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    alert(c.toDataURL());
+    window.open(img);
 }
