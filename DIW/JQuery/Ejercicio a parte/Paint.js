@@ -69,22 +69,12 @@ function desactiva() {
 }
 function pinta(e) {
 
-    //var x = e.clientX - rect.left;
-    //var y = e.clientY - rect.top;
     var x = Math.round((e.clientX - rect.left) / (rect.right - rect.left) * c.width);
     var y = Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * c.height);
-    //var x = parseInt(e.pageX - offset.left);
-    //var y = parseInt(e.pageY - offset.top);
     var ctx = c.getContext('2d');
     ctx.beginPath();
-    //ctx.lineWidth = 2;
-    //ctx.moveTo(0, 0);
-    //ctx.lineTo(x, x+2);
     ctx.fillStyle = color;
     ctx.fillRect(x, y, ancho/4.5, ancho/3.5);
-
-    //ctx.fill();
-    //console.log(x + ' ' + y);
     ctx.stroke();
 }
 function cambiaColor() {
