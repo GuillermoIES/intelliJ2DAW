@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dragable</title>
+    <script src="../../../lib/jquery-3.1.1.js"></script>
+    <script src="Ejercicio4.js"></script>
+    <style>
+        div.bello {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 300px;
+            height: 300px;
+            background-color: #8a6d3b;
+            border: 3px dotted purple;
+        }
+        div.link{
+            background:url(link.jpg);
+            position: relative;
+            width: 64px;
+            height: 96px;
+            top: 100px;
+            left: 100px;
+        }
+        div.izquierda {
+            animation: walk-west 1s steps(8) infinite;
+        }
+        div.derecha {
+            animation: walk-east 1s steps(8) infinite;
+        }
+        div.arriba {
+            animation: walk-north 1s steps(8) infinite;
+        }
+        div.abajo {
+            animation: walk-south 1s steps(8) infinite;
+        }
+        @keyframes walk-west {
+            from { background-position: 0px 0px;}
+            to { background-position: 512px 0px; }
+        }
+        @keyframes walk-east {
+            from { background-position: 0px -96px; }
+            to { background-position: 512px -96px; }
+        }
+        @keyframes walk-north {
+            from { background-position: 0px -192px; }
+            to { background-position: 512px -192px; }
+        }
+        @keyframes walk-south {
+            from { background-position: 0px -288px; }
+            to { background-position: 512px -288px; }
+        }
+    </style>
+</head>
+<body>
+<div class="link" id="mover"></div>
+</body>
+</html>
