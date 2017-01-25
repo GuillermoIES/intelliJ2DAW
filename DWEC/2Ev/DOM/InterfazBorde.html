@@ -1,0 +1,111 @@
+<!--
+    párrafo que puedas cambiar el borde a:
+    tamaño: 1, 2, 3 o 4px
+    solido
+    color: rojo, verde, azul o sin borde(por defecto)
+
+    El color del texto del párrafo puede ser:
+    naranja, marrón, morado o negro(por defecto)
+
+    el color de fondo: amarillo, salmón, azul claro o blanco(por defecto).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interaz de cambiar borde</title>
+    <link href="../../../lib//css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../../lib/js/jquery.min.js"></script>
+    <script src="../../../lib/js/bootstrap.min.js"></script>
+    <style>
+        p {
+            border: 1px solid black;
+
+        }
+        .peque {
+            width: 50px;
+            height: 50px;
+            border: 5px solid black;
+            float: left;
+            margin-right: 1%;
+        }
+    </style>
+    <script>
+        var p;
+        window.onload = function () {
+            p = document.getElementsByTagName('p')[0];
+            aplicarOnClicks();
+        }
+        function aplicarOnClicks() {
+            var borde = document.getElementsByName('borde');
+            var letra = document.getElementsByName('letra');
+            var fondo = document.getElementsByName('fondo');
+            document.getElementById('px').onchange = cambiaAnchoBorde;
+            for(var i = 0; i < borde.length; i += 1){
+                borde[i].onclick = cambiaColorBorde;
+            }
+            for(var i = 0; i < letra.length; i += 1){
+                letra[i].onclick = cambiaColorLetra;
+            }
+            for(var i = 0; i < fondo.length; i += 1){
+                fondo[i].onclick = cambiaColorFondo;
+            }
+        }
+        function cambiaAnchoBorde(){
+            var ancho = document.getElementById('px').value;
+            p.style.borderWidth = ancho + 'px';
+        }
+        function cambiaColorBorde(){
+            var color = this.style.backgroundColor;
+            p.style.borderColor = color;
+        }
+        function cambiaColorLetra(){
+            var color = this.style.backgroundColor;
+            p.style.color = color;
+        }
+        function cambiaColorFondo(){
+            var color = this.style.backgroundColor;
+            p.style.backgroundColor = color;
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+    <div class="col-md-6">
+        <h3>Estilo del párrafo</h3>
+        <label for="px">px del borde</label>
+        <input class="form-control" type="range" min="1" max="4" value="1" id="px" style="width: 100px" />
+        <br/>
+        <h3>Color del borde</h3>
+        <div class="peque" name="borde" style="background-color: red"></div>
+        <div class="peque" name="borde" style="background-color: green"></div>
+        <div class="peque" name="borde" style="background-color: blue"></div>
+        <div class="peque" name="borde" style="background-color: white"></div>
+        <br/>
+        <br/>
+        <h3>Color del texto</h3>
+        <div class="peque" name="letra" style="background-color: orange"></div>
+        <div class="peque" name="letra" style="background-color: brown"></div>
+        <div class="peque" name="letra" style="background-color: purple"></div>
+        <div class="peque" name="letra" style="background-color: black"></div>
+        <br/>
+        <br/>
+        <h3>Color de fondo</h3>
+        <div class="peque" name="fondo" style="background-color: yellow"></div>
+        <div class="peque" name="fondo" style="background-color: salmon"></div>
+        <div class="peque" name="fondo" style="background-color: lightskyblue"></div>
+        <div class="peque" name="fondo" style="background-color: white"></div>
+
+    </div>
+
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="row">
+        <p class="lead">Mi Párrafo Asombrosamente Sexy</p>
+    </div>
+</div>
+</body>
+</html>
