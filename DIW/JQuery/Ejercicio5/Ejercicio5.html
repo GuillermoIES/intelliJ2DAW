@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>menu</title>
+    <link href="../../../lib//css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../../lib/js/jquery.min.js"></script>
+    <script src="../../../lib/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('ul.desp').children($('li.down')).on('click', despliega);
+        });
+        function despliega(e) {
+            $(this).children($('ul')).slideToggle(400);
+        }
+    </script>
+    <style>
+        ul.desp, ul.oculto {
+            list-style-type: none;
+
+        }
+
+        ul.desp li  {
+            float: left;
+            margin-right: 2%;
+            padding-right: 0.25%;
+            padding-left: 0.25%;
+            border-radius: 90px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        ul.oculto li {
+            float: none;
+            margin-right: 0;
+            padding-right: 0%;
+            padding-left: 0%;
+            border-color: blue;
+        }
+        ul.oculto {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<ul class="desp">
+
+    <li class="down"> <span>Menú 1</span>
+        <ul class="oculto">
+            <li>Elemento 1</li>
+            <li>Elemento 2</li>
+        </ul>
+    </li>
+    <li  class="down"><span>Menú 2</span>
+        <ul class="oculto">
+            <li>Elemento 3</li>
+            <li>Elemento 4</li>
+            <li>Elemento 5</li>
+        </ul>
+    </li>
+    <li  class="down"><span>Menú 3</span>
+        <ul class="oculto">
+            <li>Elemento 6</li>
+            <li>Elemento 7</li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>
