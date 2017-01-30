@@ -6,10 +6,16 @@
     <script>
         var div;
         var audio = new Audio('ouch.mp3');
+        var vecesClick = 0;
 
         window.onload = function(){
             div = document.getElementById('sexydiv');
             div.onmouseover = mueve;
+            div.onclick = clickHecho;
+        }
+        function clickHecho(){
+            vecesClick += 1;
+            document.getElementById('veces').innerHTML = vecesClick + '';
         }
         function mueve(){
             var color = getRandomColor();
@@ -48,6 +54,7 @@
     </style>
 </head>
 <body>
+<h3>Has hecho click <span id="veces">0</span> veces</h3>
     <div id="sexydiv"></div>
 </body>
 </html>
