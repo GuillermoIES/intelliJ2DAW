@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Div movimiento aleatorio</title>
+    <script>
+        var div;
+        var audio = new Audio('ouch.mp3');
+
+        window.onload = function(){
+            div = document.getElementById('sexydiv');
+            div.onmouseover = mueve;
+        }
+        function mueve(){
+            var color = getRandomColor();
+            div.style.backgroundColor = color;
+            var ancho = Math.floor(Math.random() * (150-50) + 150);
+            var alto = Math.floor(Math.random() * (150-50) + 150);
+            div.style.width = ancho + 'px';
+            div.style.height = alto + 'px';
+            var left = parseInt(window.innerWidth - ancho);
+            var top = parseInt(window.innerHeight - alto);
+            var x = Math.floor(Math.random() * left);
+            var y = Math.floor(Math.random() * top);
+            div.style.left = x + 'px';
+            div.style.top = y + 'px';
+            audio.play();
+        }
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+    <style>
+        #sexydiv {
+            width: 100px;
+            height: 100px;
+            background-color: deeppink;
+            position: absolute;
+            left: 200px;
+            top: 200px;
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="sexydiv"></div>
+</body>
+</html>
