@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insertar elemento</title>
+    <script>
+        function insertar(){
+            var txt = document.createTextNode(document.getElementById('texto').value);
+            document.getElementById('d').innerHTML = '';
+            document.getElementById('d').appendChild(txt);
+            var length = txt.length;
+            document.getElementById('d').style.width = length + 'ex';
+
+        }
+    </script>
+</head>
+<style>
+    #d {
+        background-color: yellow;
+        width: 300px;
+        height: 300px;
+    }
+</style>
+<body>
+    <input type="text" id="texto"/>
+    <input type="button" value="Añadir" onclick="insertar()"/>
+    <div id="d" style="font-size: 15px"></div>
+</body>
+</html>
