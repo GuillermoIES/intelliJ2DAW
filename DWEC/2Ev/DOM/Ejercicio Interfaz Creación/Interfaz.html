@@ -1,0 +1,42 @@
+<!--
+Interfaz que permita insertar borrar o editar estos elementos:
+
+Cabeceras de nivel
+parrafos
+cajas de texto
+botones
+selects
+checkboxes
+radios
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interfaz</title>
+    <link href="../../../../lib/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../../../lib/js/jquery.min.js"></script>
+    <script src="../../../../lib/js/bootstrap.min.js"></script>
+    <script src="Interfaz.js"></script>
+</head>
+<body>
+<label class="form-control" for="elemento">Elemento a insertar: </label>
+<select onchange="cambiarDatos(this);" id="elemento" class="form-control">
+    <option>Cabecera de Nivel</option>
+    <option>Párrafo</option>
+    <option>Caja de Texto</option>
+    <option>Botón</option>
+    <option>Select</option>
+    <option>Checkboxes</option>
+    <option>Radios</option>
+</select>
+<br/>
+<div id="datos">
+
+
+</div>
+<br/>
+<input class="btn btn-primary" type="button" value="Insertar" onclick="insertar();"/>
+</body>
+</html>
