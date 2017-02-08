@@ -23,7 +23,7 @@ radios
 <body>
 <label class="form-control" for="elemento">Elemento a insertar: </label>
 <select onchange="cambiarDatos(this);" id="elemento" class="form-control">
-    <option value="h1">Cabecera de Nivel</option>
+    <option value="h">Cabecera de Nivel</option>
     <option value="p">Párrafo</option>
     <option value="input">Caja de Texto</option>
     <option value="button">Botón</option>
@@ -37,6 +37,7 @@ radios
 
 </div>
 <br/>
-<input class="btn btn-primary" type="button" value="Insertar" onclick="insertar();"/>
+<input class="btn btn-primary" id="insertar" type="button" value="Insertar" onclick="insertar();"/>
+<input class="btn btn-primary" id="edicion" type="button" value="Edición" onclick="activarEd();"/>
 </body>
 </html>
