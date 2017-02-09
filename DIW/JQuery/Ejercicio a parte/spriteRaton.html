@@ -6,6 +6,10 @@
     <script src="../../../lib/jquery-3.1.1.js"></script>
     <script src="SpriteRaton.js"></script>
     <style>
+        body {
+            width: 90vw;
+            height: 90vh;
+        }
         div.link{
             background:url(link.jpg);
             position: relative;
@@ -42,9 +46,38 @@
             from { background-position: 0px -288px; }
             to { background-position: 512px -288px; }
         }
+        div.auch {
+            position: absolute;
+            left: -100px;
+            top: -100px;
+            display: none;
+        }
+        div.espada {
+            background: url(espada.png);
+            position: absolute;
+            background-size: 30px 75px;
+            width: 30px;
+            height: 75px;
+            left: 300px;
+            top: 300px;
+            transition: transform 0.5s;
+        }
+        div.moneda {
+            position: absolute;
+            background: url(moneda.png);
+            left: -100px;
+            top: -100px;
+            width: 50px;
+            height: 50px;
+            background-size: 50px 50px;
+        }
     </style>
 </head>
-<body onload="posRat();">
+<body>
+<p>Puntuación <span id="puntos"></span></p>
 <div class="link" id="mover"></div>
+<div class="espada" id="espada"></div>
+<div class="auch" id="auch"><p>Auch!</p></div>
+
 </body>
 </html>
