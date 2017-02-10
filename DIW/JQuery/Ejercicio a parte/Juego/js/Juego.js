@@ -66,7 +66,7 @@ function genMoneda(){
         $moneda.css('transform', 'scale(' + tamaño + ')')
         $body.append($moneda);
         $moneda.on('mouseenter', ganaPunto);
-        $moneda.on('touchenter', ganaPunto); //TODO
+        $moneda.on('touchenter', ganaPunto); //TODO mirar colornote
         var monedas = $('div.moneda').length;
         $('#perde').text(100-monedas);
         if(monedas >= 100) perder();
@@ -89,7 +89,7 @@ function ganaPunto(e){
             clearInterval(mon);
             mon = setInterval('genMoneda()', 1000/vel);
             fondo += 1;
-            if(fondo > numFondos) fondo = 0;
+            if(fondo == numFondos) fondo = 0;
             $body.css('background', 'url(' + fondos[fondo] + ')');
             $body.css('background-size', '100vw 100vh');
         }
