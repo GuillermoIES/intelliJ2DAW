@@ -2,41 +2,97 @@ var $d;
 var $esp;
 var $body;
 var vel = 1;
+var tamaño = 2;
 var inter;
+var mon;
 var puntos = 0;
-var pierdes = false;
+var puntosRequeridos = 10;
+var fondos = [];
+var fondo = 0;
+var numFondos = 6;
+var music = new Audio('sonido/fondo.mp3');
 $(document).ready(function () {
+    setInterval('musica()', music.duration);
+    cargarFondos();
     $d = $('#mover');
     $esp = $('#espada');
     $body = $('body');
-    $body.on('mousemove', actualizaCoord);
+    $(window).on('mousemove', actualizaCoord);
+    $(window).on('touchmove', actualizaCoordMov);
+
     setTimeout(function(){
-    inter = setInterval('movimiento()', 1);
-    setInterval('genMoneda()', 1000);
+    inter = setInterval('movimiento()', 1/(vel/2.5));
+    mon = setInterval('genMoneda()', 1000/vel);
     $('#mover').on('click', auch);
+    $('#mover').on('touchstart', auch);
     }, 1000);
     $('#puntos').text(puntos);
-    setInterval('perder()', 50);
 });
+
+function actualizaCoordMov(e){
+    xRaton = e.changedTouches[0].pageX - parseInt($d.css('width')) / 2;
+    yRaton = e.changedTouches[0].pageY - parseInt($d.css('height'));
+    console.log(xRaton + ' ' + yRaton);
+    if (!cogido) {
+        $esp.css('left', parseInt(e.changedTouches[0].pageX) - 5);
+        $esp.css('top', parseInt(e.changedTouches[0].pageY) - parseInt($esp.css('height')));
+    }
+}
+
+function musica(){
+        music.play();
+}
+function cargarFondos(){
+    for(var i = 1; i <= numFondos; i+=1){
+        fondos[i-1] = 'img/fondo' + i + '.jpg';
+    }
+}
 function perder(){
-    //TODO comprobar si a perdido y decir que pierdes y mostrar puntuacion
+    clearInterval(inter);
+    clearInterval(mon);
+    $('#mover').off('click');
+    $('#pun').text(puntos);
+    $('div.moneda').remove();
+    $('#pierdes').css('display', 'block');
+
 }
 function genMoneda(){
-        var x = Math.floor(Math.random() * parseInt($body.css('width')));
-        var y = Math.floor(Math.random() * parseInt($body.css('height')));
+        var x = Math.floor(Math.random() * (parseInt($body.css('width'))-tamaño) - tamaño) + tamaño;
+        var y = Math.floor(Math.random() * (parseInt($body.css('height'))-tamaño) - tamaño) + tamaño;
         var $moneda = $('<div></div>');
         $moneda.addClass('moneda');
         $moneda.css('top', y);
         $moneda.css('left', x);
+        $moneda.css('transform', 'scale(' + tamaño + ')')
         $body.append($moneda);
         $moneda.on('mouseenter', ganaPunto);
-        if($('div.moneda').length > 100) pierdes = true;
+        $moneda.on('touchenter', ganaPunto); //TODO
+        var monedas = $('div.moneda').length;
+        $('#perde').text(100-monedas);
+        if(monedas >= 100) perder();
 }
 function ganaPunto(e){
     if(!cogido) {
         puntos += 1;
         e.target.remove();
+        var monedas = $('div.moneda').length;
+        $('#perde').text(100-monedas);
         $('#puntos').text(puntos);
+        if(puntos == puntosRequeridos){
+            puntosRequeridos *= 2;
+            vel += 1;
+            tamaño /= 1.25;
+            $('#monReq').text(puntosRequeridos);
+            $('#vel').text(vel);
+            clearInterval(inter);
+            inter = setInterval('movimiento()', 1/(vel/2.5));
+            clearInterval(mon);
+            mon = setInterval('genMoneda()', 1000/vel);
+            fondo += 1;
+            if(fondo > numFondos) fondo = 0;
+            $body.css('background', 'url(' + fondos[fondo] + ')');
+            $body.css('background-size', '100vw 100vh');
+        }
     }
 }
 var ejecutando = false;
@@ -53,7 +109,7 @@ function auch(e) {
         $a.css('left', x);
         $a.css('top', y);
         $a.css('display', 'block');
-        var ouch = new Audio('ouch.mp3');
+        var ouch = new Audio('sonido/ouch.mp3');
         ouch.play();
         clearInterval(inter);
         cogido = false;
@@ -61,7 +117,7 @@ function auch(e) {
         $esp.css('left', parseInt(e.pageX) - 5);
         $esp.css('top', parseInt(e.pageY) - parseInt($esp.css('height')));
         setTimeout(function () {
-            inter = setInterval('movimiento()', 1);
+            inter = setInterval('movimiento()', 1/(vel/2.5));
             ejecutando = false;
         }, 1000);
         setTimeout(function () {
@@ -113,7 +169,7 @@ function movimiento() {
     }
     var l = xLink;
     if (derecha != null)
-        l = (derecha ? xLink + vel : xLink - vel);
+        l = (derecha ? xLink + vel : xLink - vel); //FIXME de uno en uno o no functiona, osea, hacer en bucle y añadir el css cada vez, funcionará
     var t = yLink;
     if (abajo != null)
         t = (abajo ? yLink + vel : yLink - vel);
@@ -142,13 +198,13 @@ function movimiento() {
     if (!cogido && derecha == null && abajo == null) {
         cogido = true;
         seguir = false;
-        new Audio('heylisten.mp3').play();
+        new Audio('sonido/heylisten.mp3').play();
     }
     $d.css('left', l);
     $d.css('top', t);
     if (cogido) {
-        $esp.css('left', parseInt($d.css('left')) - 5);
-        $esp.css('top', parseInt($d.css('top')) - 5);
+        $esp.css('left', parseInt($d.css('left')) -5);
+        $esp.css('top', parseInt($d.css('top')) +10);
     }
 }
 function borrarTodo() {

@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Dragable</title>
-    <script src="../../../lib/jquery-3.1.1.js"></script>
-    <script src="SpriteRaton.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/Juego.js"></script>
     <style>
         body {
             width: 90vw;
             height: 90vh;
+            background: url(img/fondo1.jpg) no-repeat;
+            background-size: 100vw 100vh;
+            transition: background 2s;
         }
         div.link{
-            background:url(link.jpg);
-            position: relative;
+            background:url(img/link.png);
+            position: absolute;
             width: 64px;
             height: 96px;
             top: 100px;
             left: 100px;
+            z-index: 99;
         }
         div.izquierda {
             animation: walk-west 1s steps(8) infinite;
@@ -51,9 +55,11 @@
             left: -100px;
             top: -100px;
             display: none;
+            background: #fff;
+            border-radius: 90px;
         }
         div.espada {
-            background: url(espada.png);
+            background: url(img/espada.png);
             position: absolute;
             background-size: 30px 75px;
             width: 30px;
@@ -61,23 +67,59 @@
             left: 300px;
             top: 300px;
             transition: transform 0.5s;
+            z-index: 100;
+        }
+        div.pierdes {
+            margin-left: 44vw;
+            margin-right: 36vw;
+            margin-top: 25vh;
+            display: none;
+            z-index: 99;
+            background: #fff;
+            border-radius: 90px;
+        }
+        div.pierdes h1 {
+            text-align: center;
+            font-size: large;
+        }
+        div.pierdes input {
+            font-size: large;
+            margin-left: 20%;
+        }
+        div.stats {
+            background: #fff;
+            width: 20vw;
+            border-radius: 90px;
+            text-align: center;
         }
         div.moneda {
             position: absolute;
-            background: url(moneda.png);
+            background: url(img/moneda_sprite.png) no-repeat 0 0;
             left: -100px;
             top: -100px;
-            width: 50px;
-            height: 50px;
-            background-size: 50px 50px;
+            width: 44px;
+            height: 44px;
+            z-index: 90;
+            animation: gira 1s steps(10) infinite;
+        }
+        @keyframes gira {
+            from { background-position: 0px 0px;}
+            to { background-position: -440px 0px;}
         }
     </style>
 </head>
 <body>
-<p>Puntuación <span id="puntos"></span></p>
+<div class="stats">
+<p>Puntuación <span id="puntos">0</span></p>
+<p>Velocidad: <span id="vel">1</span>. Monedas Requeridas: <span id="monReq">10</span></p>
+<p>Monedas en pantalla para perder: <span id="perde">100</span></p>
+</div>
 <div class="link" id="mover"></div>
 <div class="espada" id="espada"></div>
 <div class="auch" id="auch"><p>Auch!</p></div>
-
+<div class="pierdes" id="pierdes">
+    <h1>Has perdido. Puntuación <span id="pun"></span></h1>
+    <input type="button" onclick="location.reload();" value="Reiniciar"/>
+</div>
 </body>
 </html>
