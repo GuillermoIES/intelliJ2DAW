@@ -168,43 +168,49 @@ function movimiento() {
         abajo = null;
     }
     var l = xLink;
-    if (derecha != null)
-        l = (derecha ? xLink + vel : xLink - vel); //FIXME de uno en uno o no functiona, osea, hacer en bucle y añadir el css cada vez, funcionará
     var t = yLink;
-    if (abajo != null)
-        t = (abajo ? yLink + vel : yLink - vel);
 
-    if(!seguir){
-        t = (t<0?0:t);
-        t = (t>$body.height()-70?$body.height()-70:t);
-        l = (l<0?0:l);
-        l = (l>$body.width()?$body.width():l);
-    }
-    borrarTodo();
-    if (abajo != null) {
-        if (abajo) {
-            $d.addClass('abajo');
-        } else {
-            $d.addClass('arriba');
+    for(var i = 0; i < vel; i+=1) {
+        if (derecha != null)
+            l = (derecha ? l + 1 : l - 1);
+
+        if (abajo != null)
+            t = (abajo ? t + 1 : t - 1);
+        if (!seguir) {
+            t = (t < 0 ? 0 : t);
+            t = (t > $body.height() - 70 ? $body.height() - 70 : t);
+            l = (l < 0 ? 0 : l);
+            l = (l > $body.width() ? $body.width() : l);
         }
-    }
-    if (derecha != null) {
-        if (derecha) {
-            $d.addClass('derecha');
-        } else {
-            $d.addClass('izquierda');
+        $d.css('left', l);
+        $d.css('top', t);
+
+
+        borrarTodo();
+        if (abajo != null) {
+            if (abajo) {
+                $d.addClass('abajo');
+            } else {
+                $d.addClass('arriba');
+            }
         }
-    }
-    if (!cogido && derecha == null && abajo == null) {
-        cogido = true;
-        seguir = false;
-        new Audio('sonido/heylisten.mp3').play();
-    }
-    $d.css('left', l);
-    $d.css('top', t);
-    if (cogido) {
-        $esp.css('left', parseInt($d.css('left')) -5);
-        $esp.css('top', parseInt($d.css('top')) +10);
+        if (derecha != null) {
+            if (derecha) {
+                $d.addClass('derecha');
+            } else {
+                $d.addClass('izquierda');
+            }
+        }
+        if (!cogido && derecha == null && abajo == null) {
+            cogido = true;
+            seguir = false;
+            new Audio('sonido/heylisten.mp3').play();
+        }
+
+        if (cogido) {
+            $esp.css('left', parseInt($d.css('left')) - 5);
+            $esp.css('top', parseInt($d.css('top')) + 10);
+        }
     }
 }
 function borrarTodo() {
