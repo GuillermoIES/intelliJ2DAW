@@ -30,12 +30,36 @@ $(document).ready(function () {
 });
 
 function actualizaCoordMov(e){
-    xRaton = e.changedTouches[0].pageX - parseInt($d.css('width')) / 2;
-    yRaton = e.changedTouches[0].pageY - parseInt($d.css('height'));
-    console.log(xRaton + ' ' + yRaton);
+    xRaton = Math.floor(e.changedTouches[0].pageX - parseInt($d.css('width')) / 2);
+    yRaton = Math.floor(e.changedTouches[0].pageY - parseInt($d.css('height')));
     if (!cogido) {
         $esp.css('left', parseInt(e.changedTouches[0].pageX) - 5);
         $esp.css('top', parseInt(e.changedTouches[0].pageY) - parseInt($esp.css('height')));
+    }
+    var clase = document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).className;
+    if(/moneda/.test(clase)){ //TODO optimizar código por dios
+        if(!cogido) {
+            puntos += 1;
+            document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).remove();
+            var monedas = $('div.moneda').length;
+            $('#perde').text(100-monedas);
+            $('#puntos').text(puntos);
+            if(puntos == puntosRequeridos){
+                puntosRequeridos *= 2;
+                vel += 1;
+                tamaño /= 1.25;
+                $('#monReq').text(puntosRequeridos);
+                $('#vel').text(vel);
+                clearInterval(inter);
+                inter = setInterval('movimiento()', 1/(vel/2.5));
+                clearInterval(mon);
+                mon = setInterval('genMoneda()', 1000/vel);
+                fondo += 1;
+                if(fondo == numFondos) fondo = 0;
+                $body.css('background', 'url(' + fondos[fondo] + ')');
+                $body.css('background-size', '100vw 100vh');
+            }
+        }
     }
 }
 
@@ -140,6 +164,7 @@ function actualizaCoord(e) {
 
 }
 function movimiento() {
+    for(var i = 0; i < vel; i+=1) {
     var derecha;
     var abajo;
     var xLink = parseInt($d.css('left'));
@@ -170,7 +195,7 @@ function movimiento() {
     var l = xLink;
     var t = yLink;
 
-    for(var i = 0; i < vel; i+=1) {
+
         if (derecha != null)
             l = (derecha ? l + 1 : l - 1);
 
