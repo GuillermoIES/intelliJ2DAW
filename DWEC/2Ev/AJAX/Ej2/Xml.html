@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xml</title>
+</head>
+<script>
+    function solicitarTexto(){
+        var connector = new XMLHttpRequest();
+        connector.open("POST", "ajax.php", true);
+        connector.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        connector.send();
+
+        connector.onreadystatechange = function() {
+            if(connector.readyState == 4 && connector.status == 200) {
+                var xml = connector.responseXML;
+                var fecha = xml.getElementsByTagName('tiempoactual')[0].childNodes[0].nodeValue;
+                document.getElementById('texto').innerHTML = fecha;
+            }
+
+        }
+    }
+</script>
+<body>
+<h1>Ajax</h1>
+<input type="button" onclick="solicitarTexto()" value="Solicitar Texto"/>
+<p id="texto">Aquí aparecerá el texto</p>
+</body>
+</html>
