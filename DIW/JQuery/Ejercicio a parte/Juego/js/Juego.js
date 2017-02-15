@@ -29,7 +29,7 @@ $(document).ready(function () {
     $('#puntos').text(puntos);
 });
 
-function actualizaCoordMov(e){
+function actualizaCoordMov(e){ //TODO hacer que se mueva aleatoriamente cuando está huyendo de ti en intervalos de "n" segundos
     xRaton = Math.floor(e.changedTouches[0].pageX - parseInt($d.css('width')) / 2);
     yRaton = Math.floor(e.changedTouches[0].pageY - parseInt($d.css('height')));
     if (!cogido) {
