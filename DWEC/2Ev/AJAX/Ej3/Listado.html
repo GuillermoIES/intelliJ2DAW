@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado</title>
+    <script>
+        window.onload = function () {
+            document.getElementById('nombre').onkeyup = analizaSugerencias;
+        }
+        function analizaSugerencias(event) {
+            var e = event | window.event;
+            var texto = document.getElementById('nombre').value;
+            var connector = new XMLHttpRequest();
+            connector.open("POST", "listadoDatos.php", true);
+            connector.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            connector.send('q=' + texto);
+
+            connector.onreadystatechange = function () {
+                if (connector.readyState == 4 && connector.status == 200) {
+                    var nombres = connector.responseText;
+                    if (nombres != 'No hay sugerencias')
+                        generaRadios(nombres.split(', '));
+                    else
+                        document.getElementById('sugerencias').innerHTML = nombres;
+                }
+
+            }
+        }
+        function generaRadios(nombres) {
+            var html = '';
+            for (var i = 0; i < nombres.length; i += 1) {
+                html += '<input type="radio" name="sug" value="' + nombres[i] + '"/>' + nombres[i];
+            }
+            document.getElementById('sugerencias').innerHTML = html;
+        }
+    </script>
+</head>
+<body>
+<label for="nombre">Nombre: </label>
+<input type="text" id="nombre"/>
+<div id="sugerencias"></div>
+</body>
+</html>

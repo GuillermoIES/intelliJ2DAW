@@ -18,8 +18,7 @@ $(document).ready(function () {
     $esp = $('#espada');
     $body = $('body');
     $(window).on('mousemove', actualizaCoord);
-    $(window).on('touchmove', actualizaCoordMov);
-
+    $(window).on('touchmove', actualizaCoord);
     setTimeout(function(){
     inter = setInterval('movimiento()', 1/(vel/2.5));
     mon = setInterval('genMoneda()', 1000/vel);
@@ -29,40 +28,6 @@ $(document).ready(function () {
     $('#puntos').text(puntos);
 });
 
-function actualizaCoordMov(e){ //TODO hacer que se mueva aleatoriamente cuando está huyendo de ti en intervalos de "n" segundos
-    xRaton = Math.floor(e.changedTouches[0].pageX - parseInt($d.css('width')) / 2);
-    yRaton = Math.floor(e.changedTouches[0].pageY - parseInt($d.css('height')));
-    if (!cogido) {
-        $esp.css('left', parseInt(e.changedTouches[0].pageX) - 5);
-        $esp.css('top', parseInt(e.changedTouches[0].pageY) - parseInt($esp.css('height')));
-    }
-    var clase = document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).className;
-    if(/moneda/.test(clase)){ //TODO optimizar código por dios
-        if(!cogido) {
-            puntos += 1;
-            document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).remove();
-            var monedas = $('div.moneda').length;
-            $('#perde').text(100-monedas);
-            $('#puntos').text(puntos);
-            if(puntos == puntosRequeridos){
-                puntosRequeridos *= 2;
-                vel += 1;
-                tamaño /= 1.25;
-                $('#monReq').text(puntosRequeridos);
-                $('#vel').text(vel);
-                clearInterval(inter);
-                inter = setInterval('movimiento()', 1/(vel/2.5));
-                clearInterval(mon);
-                mon = setInterval('genMoneda()', 1000/vel);
-                fondo += 1;
-                if(fondo == numFondos) fondo = 0;
-                $body.css('background', 'url(' + fondos[fondo] + ')');
-                $body.css('background-size', '100vw 100vh');
-            }
-        }
-    }
-}
-
 function musica(){
         music.play();
 }
@@ -71,14 +36,34 @@ function cargarFondos(){
         fondos[i-1] = 'img/fondo' + i + '.jpg';
     }
 }
-function perder(){
+function perder(){ //Hacer modal
     clearInterval(inter);
     clearInterval(mon);
     $('#mover').off('click');
     $('#pun').text(puntos);
+    var cookie = getCookie('best');
+    if(cookie == '') cookie = 0;
+    if(puntos >= cookie) document.cookie = 'best=' + puntos;
+    var punMax = getCookie('best');
+    $('#best').text(punMax);
     $('div.moneda').remove();
     $('#pierdes').css('display', 'block');
 
+}
+function getCookie(cname) { // Hacer en BBDD
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 function genMoneda(){
         var x = Math.floor(Math.random() * (parseInt($body.css('width'))-tamaño) - tamaño) + tamaño;
@@ -89,35 +74,9 @@ function genMoneda(){
         $moneda.css('left', x);
         $moneda.css('transform', 'scale(' + tamaño + ')')
         $body.append($moneda);
-        $moneda.on('mouseenter', ganaPunto);
-        $moneda.on('touchenter', ganaPunto); //TODO mirar colornote
         var monedas = $('div.moneda').length;
         $('#perde').text(100-monedas);
         if(monedas >= 100) perder();
-}
-function ganaPunto(e){
-    if(!cogido) {
-        puntos += 1;
-        e.target.remove();
-        var monedas = $('div.moneda').length;
-        $('#perde').text(100-monedas);
-        $('#puntos').text(puntos);
-        if(puntos == puntosRequeridos){
-            puntosRequeridos *= 2;
-            vel += 1;
-            tamaño /= 1.25;
-            $('#monReq').text(puntosRequeridos);
-            $('#vel').text(vel);
-            clearInterval(inter);
-            inter = setInterval('movimiento()', 1/(vel/2.5));
-            clearInterval(mon);
-            mon = setInterval('genMoneda()', 1000/vel);
-            fondo += 1;
-            if(fondo == numFondos) fondo = 0;
-            $body.css('background', 'url(' + fondos[fondo] + ')');
-            $body.css('background-size', '100vw 100vh');
-        }
-    }
 }
 var ejecutando = false;
 var seguir = true;
@@ -154,14 +113,51 @@ function auch(e) {
     }
 }
 function actualizaCoord(e) {
-    xRaton = e.pageX - parseInt($d.css('width')) / 2;
-    yRaton = e.pageY - parseInt($d.css('height'));
+    var rutaEv = (typeof e.changedTouches === 'undefined')?e:e.changedTouches[0];
+    xRaton = Math.floor(rutaEv.pageX) - parseInt($d.css('width')) / 2;
+    yRaton = Math.floor(rutaEv.pageY) - parseInt($d.css('height'));
 
     if (!cogido) {
-        $esp.css('left', parseInt(e.pageX) - 5);
-        $esp.css('top', parseInt(e.pageY) - parseInt($esp.css('height')));
+        $esp.css('left', parseInt(rutaEv.pageX) - 5);
+        $esp.css('top', parseInt(rutaEv.pageY) - parseInt($esp.css('height')));
+    }
+    var clase = document.elementFromPoint(rutaEv.pageX, rutaEv.pageY).className;
+    if(/moneda/.test(clase)){
+        if(!cogido) {
+            document.elementFromPoint(rutaEv.pageX, rutaEv.pageY).remove();
+            ganaPunto();
+        }
+
+
     }
 
+}
+function ganaPunto(){
+    if(!cogido) {
+        puntos += 1;
+
+        var monedas = $('div.moneda').length;
+        $('#perde').text(100-monedas);
+        $('#puntos').text(puntos);
+        if(puntos == puntosRequeridos)
+           subirVelocidad();
+
+    }
+}
+function subirVelocidad(){
+    puntosRequeridos *= 2;
+    vel += 1;
+    tamaño /= 1.25;
+    $('#monReq').text(puntosRequeridos);
+    $('#vel').text(vel);
+    clearInterval(inter);
+    inter = setInterval('movimiento()', 1/(vel/2.5));
+    clearInterval(mon);
+    mon = setInterval('genMoneda()', 1000/vel);
+    fondo += 1;
+    if(fondo == numFondos) fondo = 0;
+    $body.css('background', 'url(' + fondos[fondo] + ')');
+    $body.css('background-size', '100vw 100vh');
 }
 function movimiento() {
     for(var i = 0; i < vel; i+=1) {

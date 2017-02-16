@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dragable</title>
+    <title>Juego Hectoril</title>
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/Juego.js"></script>
     <style>
@@ -70,9 +70,9 @@
             z-index: 100;
         }
         div.pierdes {
-            margin-left: 44vw;
-            margin-right: 36vw;
-            margin-top: 25vh;
+            width: 20vw;
+            margin-left: 40vw;
+            margin-top: 20vh;
             display: none;
             z-index: 99;
             background: #fff;
@@ -84,7 +84,8 @@
         }
         div.pierdes input {
             font-size: large;
-            margin-left: 20%;
+            margin-left: 25%;
+            width: 50%;
         }
         div.stats {
             background: #fff;
@@ -119,6 +120,7 @@
 <div class="auch" id="auch"><p>Auch!</p></div>
 <div class="pierdes" id="pierdes">
     <h1>Has perdido. Puntuación <span id="pun"></span></h1>
+    <h1>Tu puntuación más alta en este equipo <span id="best"></span></h1>
     <input type="button" onclick="location.reload();" value="Reiniciar"/>
 </div>
 </body>
