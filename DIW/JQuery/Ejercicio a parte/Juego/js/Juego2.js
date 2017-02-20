@@ -2,7 +2,7 @@ var $d;
 var $esp;
 var $body;
 var vel = 1;
-var tamanio = 2;
+var tamaño = 2;
 var inter;
 var mon;
 var puntos = 0;
@@ -10,9 +10,7 @@ var puntosRequeridos = 10;
 var fondos = [];
 var fondo = 0;
 var numFondos = 6;
-//noinspection JSUnresolvedFunction
 var music = new Audio('sonido/fondo.mp3');
-var ale;
 $(document).ready(function () {
     setInterval('musica()', music.duration);
     cargarFondos();
@@ -24,8 +22,8 @@ $(document).ready(function () {
     setTimeout(function(){
     inter = setInterval('movimiento()', 1/(vel/2.5));
     mon = setInterval('genMoneda()', 1000/vel);
-    $d.on('mouseenter', auch); //TODO arreglar para que cuando te la robe se desactive temporalmente
-    $d.on('touchstart', auch);
+    $('#mover').on('click', auch);
+    $('#mover').on('touchstart', auch);
     }, 1000);
     $('#puntos').text(puntos);
 });
@@ -41,11 +39,7 @@ function cargarFondos(){
 function perder(){ //Hacer modal
     clearInterval(inter);
     clearInterval(mon);
-    clearInterval(ale);
-    $d.off('mouseenter');
-    $d.off('touchstart');
-    $d.off('mousemove');
-    $d.off('touchmove');
+    $('#mover').off('click');
     $('#pun').text(puntos);
     var cookie = getCookie('best');
     if(cookie == '') cookie = 0;
@@ -72,19 +66,20 @@ function getCookie(cname) { // Hacer en BBDD
     return "";
 }
 function genMoneda(){
-        var x = Math.floor(Math.random() * (parseInt($body.css('width'))-tamanio) - tamanio) + tamanio;
-        var y = Math.floor(Math.random() * (parseInt($body.css('height'))-tamanio) - tamanio) + tamanio;
+        var x = Math.floor(Math.random() * (parseInt($body.css('width'))-tamaño) - tamaño) + tamaño;
+        var y = Math.floor(Math.random() * (parseInt($body.css('height'))-tamaño) - tamaño) + tamaño;
         var $moneda = $('<div></div>');
         $moneda.addClass('moneda');
         $moneda.css('top', y);
         $moneda.css('left', x);
-        $moneda.css('transform', 'scale(' + tamanio + ')');
+        $moneda.css('transform', 'scale(' + tamaño + ')')
         $body.append($moneda);
         var monedas = $('div.moneda').length;
         $('#perde').text(100-monedas);
         if(monedas >= 100) perder();
 }
 var ejecutando = false;
+var seguir = true;
 var xRaton;
 var yRaton;
 var cogido = false;
@@ -97,11 +92,11 @@ function auch(e) {
         $a.css('left', x);
         $a.css('top', y);
         $a.css('display', 'block');
-        //noinspection JSUnresolvedFunction
         var ouch = new Audio('sonido/ouch.mp3');
         ouch.play();
         clearInterval(inter);
         cogido = false;
+        seguir = true;
         $esp.css('left', parseInt(e.pageX) - 5);
         $esp.css('top', parseInt(e.pageY) - parseInt($esp.css('height')));
         setTimeout(function () {
@@ -116,9 +111,6 @@ function auch(e) {
             $esp.css('transform', 'rotate(0deg)');
         }, 500);
     }
-    $(window).on('mousemove', actualizaCoord);
-    $(window).on('touchmove', actualizaCoord);
-    clearInterval(ale);
 }
 function actualizaCoord(e) {
     var rutaEv = (typeof e.changedTouches === 'undefined')?e:e.changedTouches[0];
@@ -129,9 +121,9 @@ function actualizaCoord(e) {
         $esp.css('left', parseInt(rutaEv.pageX) - 5);
         $esp.css('top', parseInt(rutaEv.pageY) - parseInt($esp.css('height')));
     }
-    if(!cogido) {
     var clase = document.elementFromPoint(rutaEv.pageX, rutaEv.pageY).className;
     if(/moneda/.test(clase)){
+        if(!cogido) {
             document.elementFromPoint(rutaEv.pageX, rutaEv.pageY).remove();
             ganaPunto();
         }
@@ -155,7 +147,7 @@ function ganaPunto(){
 function subirVelocidad(){
     puntosRequeridos *= 2;
     vel += 1;
-    tamanio /= 1.25;
+    tamaño /= 1.25;
     $('#monReq').text(puntosRequeridos);
     $('#vel').text(vel);
     clearInterval(inter);
@@ -174,28 +166,47 @@ function movimiento() {
     var xLink = parseInt($d.css('left'));
     var yLink = parseInt($d.css('top'));
     if (xRaton > xLink) {
-       derecha = true;
+        if(seguir) derecha = true;
+        else
+            derecha = false;
     } else if (xRaton < xLink) {
-        derecha = false;
+        if(seguir) derecha = false;
+        else
+            derecha = true;
     } else {
         derecha = null;
     }
     if (yRaton > yLink) {
-        abajo = true;
-    } else if (yRaton < yLink) {
+        if(seguir) abajo = true;
+        else
             abajo = false;
+    } else if (yRaton < yLink) {
+        if(seguir)
+            abajo = false;
+        else
+            abajo = true;
     } else {
         abajo = null;
     }
     var l = xLink;
     var t = yLink;
+
+
         if (derecha != null)
             l = (derecha ? l + 1 : l - 1);
 
         if (abajo != null)
             t = (abajo ? t + 1 : t - 1);
+        if (!seguir) {
+            t = (t < 0 ? 0 : t);
+            t = (t > $body.height() - 70 ? $body.height() - 70 : t);
+            l = (l < 0 ? 0 : l);
+            l = (l > $body.width() ? $body.width() : l);
+        }
         $d.css('left', l);
         $d.css('top', t);
+
+
         borrarTodo();
         if (abajo != null) {
             if (abajo) {
@@ -211,31 +222,17 @@ function movimiento() {
                 $d.addClass('izquierda');
             }
         }
-        if (derecha == null && abajo == null) {
-            if (cogido) {
-                coordenadaAleatoria();
-            } else {
-                cogido = true;
-                $(window).off('mousemove');
-                $(window).off('touchmove');
-                ale = setInterval('coordenadaAleatoria()', 500);
-                seguir = false;
-                //noinspection JSUnresolvedFunction
-                new Audio('sonido/heylisten.mp3').play();
-            }
+        if (!cogido && derecha == null && abajo == null) {
+            cogido = true;
+            seguir = false;
+            new Audio('sonido/heylisten.mp3').play();
         }
-
 
         if (cogido) {
             $esp.css('left', parseInt($d.css('left')) - 5);
             $esp.css('top', parseInt($d.css('top')) + 10);
         }
     }
-}
-function coordenadaAleatoria(){
-    xRaton = Math.floor(Math.random() * $body.width());
-    yRaton = Math.floor(Math.random() * $body.height());
-    console.log(xRaton + ' ' + yRaton);
 }
 function borrarTodo() {
     $d.removeClass('arriba');
