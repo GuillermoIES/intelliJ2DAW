@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cestas</title>
+    <script src="../../../lib/jquery-3.1.1.js"></script>
+    <script src="../../../lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="Ejercicio10.js"></script>
+    <link rel="../../../lib/jquery-ui/jquery-ui.min.css"/>
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+        div.cesta {
+            position: absolute;
+            background-image: url(cestaT.png);
+            background-size: 20vw 20vh;
+            width: 20vw;
+            height: 20vh;
+            top: 30vh;
+            border-radius: 90px;
+        }
+        #c1 {
+            left: 1vw;
+        }
+        #c2 {
+            left: 79vw;
+        }
+        div.tablero{
+            position: absolute;
+            width: 54vw;
+            height: 80vh;
+            left: 23vw;
+            top: 10vh;
+            background-color: lightgray;
+        }
+        div.bola {
+            position: absolute !important;
+            top: -100px;
+            left: -100px;
+            width: 4vw;
+            height: 5vh;
+            border-radius: 90px;
+            border: 1px solid black;
+        }
+        div.roja {
+            background-color: red;
+        }
+        div.azul {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<h1>Rojas: <span id="rojas">0</span> || Azules: <span id="azules">0</span></h1>
+<div class="cesta roja" id="c1"></div>
+<div class="cesta azul" id="c2"></div>
+<div class="tablero" id="t"></div>
+</body>
+</html>
