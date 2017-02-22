@@ -29,15 +29,18 @@ function cargaDatos(){
 
     connector.onreadystatechange = function () {
         if (connector.readyState == 4 && connector.status == 200) {
-            alert(connector.responseText); //TODO
-            // var xml = connector.responseXML;
-            // $('#unoN').text(xml.getElementsByTagName('nombre').childNodes[0].childNodes[0]);
-            // $('#dosN').text(xml.getElementsByTagName('nombre').childNodes[1].childNodes[0]);
-            // $('#tresN').text(xml.getElementsByTagName('nombre').childNodes[2].childNodes[0]);
-            //
-            // $('#unoP').text(xml.getElementsByTagName('puntuacion').childNodes[0].childNodes[0]);
-            // $('#dosP').text(xml.getElementsByTagName('puntuacion').childNodes[1].childNodes[0]);
-            // $('#tresP').text(xml.getElementsByTagName('puntuacion').childNodes[2].childNodes[0]);
+            // console.log(connector.responseText); //TODO
+            var xml = connector.responseXML;
+            console.log(xml.childNodes.length);
+            console.log(xml.childNodes[0].length);
+            // console.log(xml.getElementsByTagName('nombre').childNodes.length);
+            $('#unoN').text(xml.getElementsByTagName('nombre').childNodes[0].childNodes[0]);
+            $('#dosN').text(xml.getElementsByTagName('nombre').childNodes[1].childNodes[0]);
+            $('#tresN').text(xml.getElementsByTagName('nombre').childNodes[2].childNodes[0]);
+
+            $('#unoP').text(xml.getElementsByTagName('puntuacion').childNodes[0].childNodes[0]);
+            $('#dosP').text(xml.getElementsByTagName('puntuacion').childNodes[1].childNodes[0]);
+            $('#tresP').text(xml.getElementsByTagName('puntuacion').childNodes[2].childNodes[0]);
         }
 
     }

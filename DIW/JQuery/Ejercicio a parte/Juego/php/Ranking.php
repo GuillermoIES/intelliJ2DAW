@@ -5,6 +5,7 @@
  * Date: 21/02/2017
  * Time: 13:32
  */
+header('Content-Type: text/xml');
 //$nombreL = $_POST['nombre'];
 //$puntuacionL = $_POST['puntuacion'];
 $nombreL = 'bbf';
@@ -30,15 +31,15 @@ else if ($puntuacion > $puntuacion[1] && $puntuacion < $puntuacion[0]) $pos = 2;
 else if ($puntuacion > $puntuacion[0]) $pos = 1;
 
 if($pos == 4){
-    echo '<ranking>';
-    echo "<stat><rank>$rank[0]</rank><nombre>$nombre[0]</nombre><puntuacion>$puntuacion[0]</puntuacion></stat>";
-    echo "<stat><rank>$rank[1]</rank><nombre>$nombre[1]</nombre><puntuacion>$puntuacion[1]</puntuacion></stat>";
-    echo "<stat><rank>$rank[2]</rank><nombre>$nombre[2]</nombre><puntuacion>$puntuacion[2]</puntuacion></stat>";
+    echo '<?xml version="1.0" ?><ranking>';
+    echo "<stat><rank>{$rank[0]}</rank><nombre>{$nombre[0]}</nombre><puntuacion>{$puntuacion[0]}</puntuacion></stat>";
+    echo "<stat><rank>{$rank[1]}</rank><nombre>{$nombre[1]}</nombre><puntuacion>{$puntuacion[1]}</puntuacion></stat>";
+    echo "<stat><rank>{$rank[2]}</rank><nombre>{$nombre[2]}</nombre><puntuacion>{$puntuacion[2]}</puntuacion></stat>";
     echo '</ranking>';
 } else if($pos == 3) {
     $conn->exec("DELETE FROM ranking WHERE Rank = 3");
     $conn->exec("insert into ranking values $nombreL, $puntuacionL, 3");
-    echo '<ranking>';
+    echo '<?xml version="1.0" ?><ranking>';
     echo "<stat><rank>$rank[0]</rank><nombre>$nombre[0]</nombre><puntuacion>$puntuacion[0]</puntuacion></stat>";
     echo "<stat><rank>$rank[1]</rank><nombre>$nombre[1]</nombre><puntuacion>$puntuacion[1]</puntuacion></stat>";
     echo "<stat><rank>3</rank><nombre>$nombreL</nombre><puntuacion>$puntuacionL</puntuacion></stat>";
@@ -47,7 +48,7 @@ if($pos == 4){
     $conn->exec("DELETE FROM ranking WHERE Rank = 3");
     $conn->exec("insert into ranking values $nombre[1], $puntuacion[1], 3");
     $conn->exec("insert into ranking values $nombreL, $puntuacionL, 2");
-    echo '<ranking>';
+    echo '<?xml version="1.0" ?><ranking>';
     echo "<stat><rank>$rank[0]</rank><nombre>$nombre[0]</nombre><puntuacion>$puntuacion[0]</puntuacion></stat>";
     echo "<stat><rank>2</rank><nombre>$nombreL</nombre><puntuacion>$puntuacionL</puntuacion></stat>";
     echo "<stat><rank>$rank[1]</rank><nombre>$nombre[1]</nombre><puntuacion>$puntuacion[1]</puntuacion></stat>";
@@ -57,7 +58,7 @@ if($pos == 4){
     $conn->exec("insert into ranking values $nombre[1], $puntuacion[1], 3");
     $conn->exec("insert into ranking values $nombre[0], $puntuacion[0], 2");
     $conn->exec("insert into ranking values $nombreL, $puntuacionL, 1");
-    echo '<ranking>';
+    echo '<?xml version="1.0" ?><ranking>';
     echo "<stat><rank>1</rank><nombre>$nombreL</nombre><puntuacion>$puntuacionL</puntuacion></stat>";
     echo "<stat><rank>$rank[0]</rank><nombre>$nombre[0]</nombre><puntuacion>$puntuacion[0]</puntuacion></stat>";
     echo "<stat><rank>$rank[1]</rank><nombre>$nombre[1]</nombre><puntuacion>$puntuacion[1]</puntuacion></stat>";
