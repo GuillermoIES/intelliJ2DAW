@@ -1,0 +1,27 @@
+{"Fruteria":
+ [
+  {"Fruta":
+   [
+    {"Nombre":"Manzana pink lady","Cantidad":20},
+	{"Nombre":"Manzana golden","Cantidad":14},
+	{"Nombre":"Manzana granny smith","Cantidad":10},
+	{"Nombre":"Aguacate","Cantidad":6},
+	{"Nombre":"Arandano","Cantidad":3},
+    {"Nombre":"Pera","Cantidad":15},
+	{"Nombre":"Mandarina","Cantidad":20},
+    {"Nombre":"Naranja","Cantidad":30}
+   ]
+  },
+  {"Verdura":
+   [
+    {"Nombre":"Lechuga","Cantidad":40},
+    {"Nombre":"Tomate","Cantidad":60},
+	{"Nombre":"Brocoli","Cantidad":6},
+	{"Nombre":"Zanahoria","Cantidad":80},
+    {"Nombre":"Remolacha","Cantidad":5},
+	{"Nombre":"Alcachofa","Cantidad":18},
+    {"Nombre":"Pepino","Cantidad":14}
+   ]
+  }
+ ]
+}

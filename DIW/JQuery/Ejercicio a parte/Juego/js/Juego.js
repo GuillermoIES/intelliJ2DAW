@@ -1,11 +1,11 @@
 var $d;
 var $esp;
 var $body;
-var vel = 20;
+var vel = 22;
 var tamanio = 2;
 var inter;
 var mon;
-var puntos = 0;
+var puntos = 16;
 var puntosRequeridos = 10;
 var fondos = [];
 var fondo = 0;
@@ -23,7 +23,7 @@ function nombreYRanking(){
 }
 function cargaDatos(){
     var connector = new XMLHttpRequest();
-    connector.open("POST", "php/Ranking.php", true);
+    connector.open("POST", "php/Ranking2.php", true);
     connector.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     connector.send('nombre=' + nombre + '&puntuacion=' + puntos);
 
@@ -31,16 +31,15 @@ function cargaDatos(){
         if (connector.readyState == 4 && connector.status == 200) {
             // console.log(connector.responseText); //TODO
             var xml = connector.responseXML;
-            console.log(xml.childNodes.length);
-            console.log(xml.childNodes[0].length);
+            // console.log(xml.firstElementChild);
             // console.log(xml.getElementsByTagName('nombre').childNodes.length);
-            $('#unoN').text(xml.getElementsByTagName('nombre').childNodes[0].childNodes[0]);
-            $('#dosN').text(xml.getElementsByTagName('nombre').childNodes[1].childNodes[0]);
-            $('#tresN').text(xml.getElementsByTagName('nombre').childNodes[2].childNodes[0]);
+            $('#unoN').text(xml.getElementsByTagName('nombre')[0].innerHTML);
+            $('#dosN').text(xml.getElementsByTagName('nombre')[1].innerHTML);
+            $('#tresN').text(xml.getElementsByTagName('nombre')[2].innerHTML);
 
-            $('#unoP').text(xml.getElementsByTagName('puntuacion').childNodes[0].childNodes[0]);
-            $('#dosP').text(xml.getElementsByTagName('puntuacion').childNodes[1].childNodes[0]);
-            $('#tresP').text(xml.getElementsByTagName('puntuacion').childNodes[2].childNodes[0]);
+            $('#unoP').text(xml.getElementsByTagName('puntuacion')[0].innerHTML);
+            $('#dosP').text(xml.getElementsByTagName('puntuacion')[1].innerHTML);
+            $('#tresP').text(xml.getElementsByTagName('puntuacion')[2].innerHTML);
         }
 
     }
@@ -93,7 +92,16 @@ function perder(){
     // $('#uno').text(punMax);
     $('div.moneda').remove();
     $('#perder').modal('toggle');
+    setTimeout( function(){$('#nombre').focus()}, 1000);
 
+    $('#nombre').on('keypress', soloCinco);
+
+
+}
+function soloCinco(){
+    if($(this).val().length >= 5){
+       return false;
+    }
 }
 function getCookie(cname) { // Hacer en BBDD
     var name = cname + "=";
