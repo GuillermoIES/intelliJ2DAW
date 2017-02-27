@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+    <script src="sjcl.js"></script>
+    <script>
+        function encripta(num){
+            var pwd = document.getElementById(((num==0)?'pwd':'pw')).value;
+            alert(pwd);
+            var out = sjcl.hash.sha256.hash(pwd);
+            var hash = sjcl.codec.hex.fromBits(out);
+            document.getElementById(((num==0)?'pwd2':'pw2')).value = hash;
+        }
+    </script>
+</head>
+<body>
+ <form onsubmit="encripta(0)"  method="post" action="Prueba.php">
+     <label for="nombre">Nombre</label>
+     <input type="text" id="nombre" name="nombre"/>
+     <br/>
+     <label for="pwd">Contraseña</label>
+     <input type="text" id="pwd"  />
+     <br/>
+     <input type="text" hidden="hidden" id="pwd2" name="pwd"/>
+     <input type="submit"/>
+ </form>
+ <form onsubmit="encripta(1)" method="post" action="Prueba2.php">
+     <label for="nombr">Nombre</label>
+     <input type="text" id="nombr" name="nombre"/>
+     <br/>
+     <label for="pw">Contraseña</label>
+     <input type="text" id="pw" />
+     <br/>
+     <input type="text" hidden="hidden" id="pw2" name="pwd"/>
+     <input type="submit"/>
+ </form>
+</body>
+</html>

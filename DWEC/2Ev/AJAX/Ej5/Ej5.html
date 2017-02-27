@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var librosJSON;
+        window.onload = function () {
+            cargaLibros();
+            document.getElementById('autores').onchange = generaFechas;
+            document.getElementById('fechas').onchange = generaLibros;
+        }
+        function cargaLibros() {
+            var connector = new XMLHttpRequest();
+            connector.open("POST", "libros.txt", true);
+            connector.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            connector.send();
+            connector.onreadystatechange = function () {
+                if (connector.readyState == 4 && connector.status == 200) {
+                    librosJSON = JSON.parse(connector.responseText);
+                    generaSelect();
+                }
+            }
+        }
+        function generaSelect() {
+            for (var i = 0; i < librosJSON.length; i += 1) {
+                var yaEsta = false;
+                for(var a = 0; a < document.getElementById('autores').childNodes.length; a+=1){
+                    if(document.getElementById('autores').childNodes[a].innerHTML == librosJSON[i]['Autor'])
+                        yaEsta = true;
+                }
+                if(!yaEsta) {
+                    var option = new Option(librosJSON[i]['Autor']);
+                    document.getElementById('autores').appendChild(option);
+                }
+            }
+            generaFechas();
+        }
+
+        function generaFechas() {
+            var autor = document.getElementById('autores').value;
+            console.log(autor);
+            for (var i = 0; i < librosJSON.length; i += 1) {
+                if (librosJSON[i]['Autor'] == autor) {
+                    var yaEsta = false;
+                    for(var a = 0; a < document.getElementById('fechas').childNodes.length; a+=1){
+                        if(document.getElementById('fechas').childNodes[a].innerHTML == librosJSON[i]['Fecha'])
+                            yaEsta = true;
+                    }
+                    if(!yaEsta) {
+                        var option = new Option(librosJSON[i]['Fecha']);
+                        document.getElementById('fechas').appendChild(option);
+                    }
+                }
+            }
+            if (document.getElementById('fechas').childNodes.length == 0)
+                document.getElementById('fechas').disabled = true;
+            else
+                document.getElementById('fechas').disabled = false;
+
+            generaLibros();
+        }
+
+        function generaLibros() {
+            var libros = '';
+//            var autor = document.getElementById('autores').value;
+            var fecha = document.getElementById('fechas').value;
+            for (var i = 0; i < librosJSON.length; i += 1) {
+                if(/*librosJSON[i]["Autor"] == autor && */librosJSON[i]['Fecha'] == fecha ) {
+                    libros += 'Autor: ' + librosJSON[i]['Autor'] + '<br/>';
+                    libros += 'Título: ' + librosJSON[i]['Titulo'] + '<br/>';
+                    libros += 'Fecha: ' + librosJSON[i]['Fecha'] + '<br/>';
+                    libros += '<br/>';
+                }
+            }
+            document.getElementById('contenido').innerHTML = libros;
+        }
+    </script>
+</head>
+<body>
+<label for="autores">Autores</label>
+<select id="autores"></select>
+<label for="fechas">Fechas</label>
+<select id="fechas" disabled="disabled"></select>
+<div id="contenido"></div>
+</body>
+</html>

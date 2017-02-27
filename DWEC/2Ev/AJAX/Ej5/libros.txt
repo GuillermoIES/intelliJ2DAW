@@ -1,0 +1,13 @@
+
+[
+ {"Autor":"Juan Rulfo", "Titulo":"Pedro Páramo", "Fecha":"2014"},
+ {"Autor":"Juan Rulfo", "Titulo":"El Llano en Llamas", "Fecha":"2013"},
+ {"Autor":"Pablo Neruda", "Titulo":"Veinte poemas de amor y una canción desesperada", "Fecha":"2013"},
+ {"Autor":"Miguel de Cervantes Saavedra", "Titulo":"Don Quijote de la Mancha", "Fecha":"2010"},
+ {"Autor":"Jorge Luis Borges", "Titulo":"Ficciones", "Fecha":"2014"},
+ {"Autor":"Jorge Llopis", "Titulo":"La rebelión de las musas", "Fecha":"2014"},
+ {"Autor":"José Saramago", "Titulo":"Somos cuentos de cuentos", "Fecha":"2014"},
+ {"Autor":"Mariano José de Larra", "Titulo":"Figaro", "Fecha":"2010"},
+ {"Autor":"Elias Moro Cuellar", "Titulo":"La tabla del 3", "Fecha":"2014"},
+ {"Autor":"Wenceslao Fernández Florez", "Titulo":"El bosque animado", "Fecha":"2010"}
+]
